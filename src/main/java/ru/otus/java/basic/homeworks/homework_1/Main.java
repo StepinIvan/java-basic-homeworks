@@ -1,5 +1,6 @@
 package ru.otus.java.basic.homeworks.homework_1;
 
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -10,10 +11,12 @@ public class Main {
         int userNumber = scanner.nextInt();
         switch (userNumber) {
             case 1 -> greetings();
-            case 2 -> checkSign(1, 2, -31);
+            case 2 -> checkSign((int) ((Math.random() * (100 + Math.abs(-100))) - 100),
+                    (int) ((Math.random() * (100 + Math.abs(-100))) - 100),
+                    (int) ((Math.random() * (100 + Math.abs(-100))) - 100));
             case 3 -> selectColor();
             case 4 -> compareNumbers();
-            case 5 -> addOrSubtractAndPrint(10, 2, false);
+            case 5 -> addOrSubtractAndPrint((int)(Math.random() * 100), (int)(Math.random() * 100), new Random().nextBoolean());
         }
     }
 
@@ -24,9 +27,9 @@ public class Main {
     public static void checkSign(int a, int b, int c) {
         int sum = a + b + c;
         if (sum > 0) {
-            System.out.println("Сумма положительная");
+            System.out.println("a = " + a + ", " + "b = " + b + ", " + "c = "+ c + " - Сумма положительная");
         } else {
-            System.out.println("Сумма отрицательная");
+            System.out.println("a = " + a + ", " + "b = " + b + ", " + "c = "+ c + " - Сумма отрицательная");
         }
     }
 
@@ -53,9 +56,11 @@ public class Main {
 
     public static void addOrSubtractAndPrint(int initValue, int delta, boolean increment) {
         if (increment) {
-            System.out.println(initValue + delta);
+            System.out.println("initValue = " + initValue + ", " + "delta = " + delta + ", " + "increment = "
+                    + increment +  "\nРезультат = " + (initValue + delta));
         } else {
-            System.out.println(initValue - delta);
+            System.out.println("initValue = " + initValue + ", " + "delta = " + delta + ", " + "increment = "
+                    + increment + "\nРезультат = " + (initValue - delta));
         }
     }
 }
