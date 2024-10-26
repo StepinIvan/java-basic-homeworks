@@ -99,10 +99,8 @@ public class Main {
         }
         int[] resultArray = new int[maxLength];
         for (int[] array : arrays) {
-            int count = 0;
-            for (int a : array) {
-                resultArray[count] += a;
-                count++;
+            for (int i = 0; i < array.length; i++) {
+                resultArray[i] += array[i];
             }
         }
         return resultArray;
@@ -143,8 +141,7 @@ public class Main {
         boolean flag = true;
         if (task == '<') {
             for (int i = 0; i < array.length - 1; i++) {
-                int temp = array[i];
-                if (temp <= array[i + 1]) {
+                if (array[i] <= array[i + 1]) {
                     System.out.println("В массиве нарушается порядок убывания");
                     flag = false;
                     break;
@@ -155,8 +152,7 @@ public class Main {
             }
         } else {
             for (int i = 0; i < array.length - 1; i++) {
-                int temp = array[i];
-                if (temp >= array[i + 1]) {
+                if (array[i] >= array[i + 1]) {
                     System.out.println("В массиве нарушается порядок возрастания");
                     flag = false;
                     break;
@@ -170,13 +166,9 @@ public class Main {
 
     public static int[] reverseArray(int[] array) {
         int[] reverseArray = new int[array.length];
-        int count = array.length - 1;
-        for (int j : array) {
-            reverseArray[count] = j;
-            count--;
+        for (int i = 0; i < array.length; i++) {
+            reverseArray[i] = array[array.length - 1 - i];
         }
         return reverseArray;
     }
-
-
 }
