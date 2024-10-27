@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         int[][] array_1 = {{1, 2, 3}, {4, 5, -6}, {7, -8, 9}, {-10, 11, 12}};
         int[][] array_2 = {{1, 2, 3, 1, 2}, {4, 5, 6, 1, 2}, {7, 8, 9, 1, 2}, {7, 8, 9, 1, 2}, {7, 8, 9, 1, 2}};
-        int[][] array_3 = new int[4][4];
+        int[][] array_3 = new int[3][6];
         System.out.println("Сумма положительных элементов двумерного массива = " + simOfPositiveElements(array_1));
         printUserDimensionSquare(4);
         makeDiagonalElementsZero(array_2);
@@ -120,14 +120,18 @@ public class Main {
                 array[i][right - 1] = number++;
             }
             right--;
-            for (int i = right - 1; i >= left; i--) {
-                array[bottom - 1][i] = number++;
+            if (top < bottom) {
+                for (int i = right - 1; i >= left; i--) {
+                    array[bottom - 1][i] = number++;
+                }
+                bottom--;
             }
-            bottom--;
-            for (int i = bottom - 1; i >= top; i--) {
-                array[i][left] = number++;
+            if (left < right) {
+                for (int i = bottom - 1; i >= top; i--) {
+                    array[i][left] = number++;
+                }
+                left++;
             }
-            left++;
         }
         return array;
     }
