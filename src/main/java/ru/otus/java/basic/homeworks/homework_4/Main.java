@@ -24,7 +24,7 @@ public class Main {
             }
         }
 
-        Box myBox = new Box(3, "Black", true);
+        Box myBox = new Box(1.,1.5,2., "Black", true);
         myBox.open();
         myBox.close();
         myBox.changeColor("синий");

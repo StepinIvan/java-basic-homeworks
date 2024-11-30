@@ -1,13 +1,17 @@
 package ru.otus.java.basic.homeworks.homework_4;
 
 public class Box {
-    private int size;
+    private double width;
+    private double height;
+    private double length;
     private String color;
     private boolean isOpened;
     private boolean isFilled;
 
-    public Box(int size, String color, boolean isOpened) {
-        this.size = size;
+    public Box(double width, double height, double length, String color, boolean isOpened) {
+        this.width = width;
+        this.height = height;
+        this.length = length;
         this.color = color;
         this.isOpened = isOpened;
         this.isFilled = false;
@@ -29,7 +33,7 @@ public class Box {
     }
 
     public void info() {
-        System.out.println("Размер коробки: " + size + "\nЦвет коробки: " + color);
+        System.out.println("Размеры коробки (ширина, высота, длина): " + width + " м, " + height + " м, " + length + " м");
         if (isOpened) {
             System.out.println("Статус коробки: открыта");
         } else {
