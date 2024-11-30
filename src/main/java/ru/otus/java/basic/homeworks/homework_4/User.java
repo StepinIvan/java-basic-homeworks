@@ -19,7 +19,7 @@ public class User {
     }
 
     public void info() {
-        System.out.println("Фамилия: " + surname + "\nИмя: " + name + "\nОтчество: " + patronymic +
+        System.out.println("ФИО: " + surname + " " + name + " " + patronymic +
                 "\nГод рождения: " + birthYear + "\nEmail: " + email);
     }
 }
