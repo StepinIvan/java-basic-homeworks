@@ -42,28 +42,28 @@ public class Box {
     }
 
     public void putItem(String item) {
-        if (isOpened) {
-            if (isFilled) {
-                System.out.println("В коробке уже есть предмет");
-            } else {
-                isFilled = true;
-                System.out.println("Вы положили " + item + " в коробку");
-            }
-        } else {
+        if (!isOpened) {
             System.out.println("Откройте коробку для взаимодействия с ее предметами");
+            return;
         }
+        if (isFilled) {
+            System.out.println("В коробке уже есть предмет");
+            return;
+        }
+        isFilled = true;
+        System.out.println("Вы положили " + item + " в коробку");
     }
 
     public void throwAwayItem() {
-        if (isOpened) {
-            if (isFilled) {
-                System.out.println("Вы выбросили предмет из коробки");
-                isFilled = false;
-            } else {
-                System.out.println("Вы не можете ничего выбросить, так как в коробке ничего нет");
-            }
-        } else {
+        if (!isOpened) {
             System.out.println("Откройте коробку для взаимодействия с ее предметами");
+            return;
         }
+        if (!isFilled) {
+            System.out.println("Вы не можете ничего выбросить, так как в коробке ничего нет");
+            return;
+        }
+        isFilled = false;
+        System.out.println("Вы выбросили предмет из коробки");
     }
 }

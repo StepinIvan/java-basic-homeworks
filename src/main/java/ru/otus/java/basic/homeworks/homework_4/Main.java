@@ -24,11 +24,14 @@ public class Main {
             }
         }
 
-        Box myBox = new Box(1.,1.5,2., "Black", true);
+        Box myBox = new Box(1., 1.5, 2., "Black", true);
         myBox.open();
         myBox.close();
         myBox.changeColor("синий");
         myBox.info();
+        myBox.throwAwayItem();
+        myBox.open();
+        myBox.throwAwayItem();
         myBox.putItem("Телефон");
         myBox.open();
         myBox.putItem("Телефон");
