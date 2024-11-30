@@ -1,24 +1,14 @@
 package ru.otus.java.basic.homeworks.homework_5.animals;
 
 public class Cat extends Animal {
-    public Cat(String name, int runVelocity, int swimVelocity, int endurance) {
-        super(name, runVelocity, swimVelocity, endurance);
-    }
-
-    @Override
-    public int run(int distance) {
-        if (distance > endurance) {
-            System.out.println("Кот не может столько пробежать, единиц выносливости недостаточно");
-            return -1;
-        } else {
-            endurance -= distance;
-        }
-        return distance / runVelocity;
+    public Cat(String name, int runVelocity, int endurance) {
+        super(name, runVelocity, endurance);
+        swimVelocity = 0;
     }
 
     @Override
     public int swim(int distance) {
-        System.out.println("Кот не умеет плавать!");
+        System.out.println(name + " не умеет плавать!");
         return -1;
     }
 

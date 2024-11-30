@@ -12,7 +12,20 @@ public abstract class Animal {
         this.swimVelocity = swimVelocity;
         this.endurance = endurance;
     }
-    public abstract int run(int distance);
+    public Animal(String name, int runVelocity, int endurance) {
+        this.name = name;
+        this.runVelocity = runVelocity;
+        this.endurance = endurance;
+    }
+    public int run(int distance) {
+        if (distance > endurance) {
+            System.out.println(name + " не может столько пробежать, единиц выносливости недостаточно");
+            return -1;
+        } else {
+            endurance -= distance;
+        }
+        return distance / runVelocity;
+    }
     public abstract int swim(int distance);
     public abstract void info();
 }
