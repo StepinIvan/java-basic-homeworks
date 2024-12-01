@@ -11,19 +11,22 @@ public class Plate {
         this.maxAmountOfFood = maxAmountOfFood;
         currentAmountOfFood = maxAmountOfFood;
     }
-    public void addFoodToPlate (int amountOfFood) {
+
+    public void addFoodToPlate(int amountOfFood) {
         currentAmountOfFood = Math.min((currentAmountOfFood + amountOfFood), maxAmountOfFood);
     }
+
     public boolean takeFoodFromPlate(int amountOfFood) {
         if (currentAmountOfFood - amountOfFood < 0) {
-            currentAmountOfFood = 0;
             return false;
         } else {
             currentAmountOfFood -= amountOfFood;
             return true;
         }
     }
+
     public void info() {
         System.out.println("Количество еды в тарелке: " + currentAmountOfFood);
+        System.out.println("--------------------------------------------------------");
     }
 }

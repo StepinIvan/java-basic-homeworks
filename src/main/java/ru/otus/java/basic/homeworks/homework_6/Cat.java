@@ -10,14 +10,17 @@ public class Cat {
         this.appetite = appetite;
         full = false;
     }
+
     public void eat(Plate plate) {
-        if (plate.getCurrentAmountOfFood() < appetite) {
-            System.out.println(name + " не стал есть, так как еды слишком мало");
-        } else {
+        if (plate.takeFoodFromPlate(appetite)) {
             full = true;
+        } else {
+            System.out.println(name + " не стал есть, так как еды слишком мало");
         }
     }
+
     public void info() {
-        System.out.println("Имя: " + name + "\nАппетит: " + appetite + "\nСтатус сытости: " + (full ? "Сыт" : "Голоден"));
+        System.out.println("Имя: " + name + "\nАппетит: " + appetite + "\nСтатус сытости: " + (full ? "сыт" : "голоден"));
+        System.out.println("--------------------------------------------------------");
     }
 }
