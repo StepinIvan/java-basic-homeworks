@@ -4,6 +4,7 @@ public class Horse extends Animal {
     public Horse(String name, int runVelocity, int swimVelocity, int endurance) {
         super(name, runVelocity, swimVelocity, endurance);
     }
+
     @Override
     public int swim(int distance) {
         if (distance * 4 > endurance) {
