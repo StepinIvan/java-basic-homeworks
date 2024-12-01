@@ -1,6 +1,9 @@
 package ru.otus.java.basic.homeworks.homework_5.animals;
 
+import lombok.Getter;
+
 public abstract class Animal {
+    @Getter
     String name;
     int runVelocity;
     int swimVelocity;
@@ -27,5 +30,9 @@ public abstract class Animal {
         return distance / runVelocity;
     }
     public abstract int swim(int distance);
-    public abstract void info();
+    public void info() {
+        System.out.println("Имя: " + name + "\nСкорость бега: " + runVelocity + "\nСкорость плавания: " + swimVelocity
+                + "\nВыносливость: " + endurance);
+        System.out.println("----------------------------------------------------");
+    };
 }

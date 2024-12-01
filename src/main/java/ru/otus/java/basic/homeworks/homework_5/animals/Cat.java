@@ -11,11 +11,4 @@ public class Cat extends Animal {
         System.out.println(name + " не умеет плавать!");
         return -1;
     }
-
-    @Override
-    public void info() {
-        System.out.println("Имя " + name + "\nСкорость бега: " + runVelocity + "\nСкорость плавания: " + swimVelocity
-                + "\nВыносливость: " + endurance);
-        System.out.println("----------------------------------------------------");
-    }
 }

@@ -6,19 +6,12 @@ public class Dog extends Animal {
     }
     @Override
     public int swim(int distance) {
-        if (distance > endurance) {
-            System.out.println(name + " не может столько пробежать, единиц выносливости недостаточно");
+        if (distance * 2 > endurance) {
+            System.out.println(name + " не может столько проплыть, единиц выносливости недостаточно");
             return -1;
         } else {
             endurance -= distance * 2;
         }
-        return distance / runVelocity;
-    }
-
-    @Override
-    public void info() {
-        System.out.println("Имя " + name + "\nСкорость бега: " + runVelocity + "\nСкорость плавания: " + swimVelocity
-                + "\nВыносливость: " + endurance);
-        System.out.println("----------------------------------------------------");
+        return distance / swimVelocity;
     }
 }
