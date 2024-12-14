@@ -1,14 +1,14 @@
 package ru.otus.java.basic.homeworks.homework_7;
 
 import lombok.Getter;
-
-import java.lang.invoke.LambdaConversionException;
-
+import lombok.Setter;
 
 public class Human {
     @Getter
     private String name;
     private Transport currentTransport = null;
+    @Getter
+    @Setter
     private int endurance;
 
     public Human(String name, int endurance) {
@@ -17,8 +17,8 @@ public class Human {
     }
     public void takeTransport(Transport transport) {
         currentTransport = transport;
-        System.out.println(name + " использует " + transport);
-        //TODO Исправить вывод текущего транспорта
+        transport.setUser(this);
+        System.out.println(name + " использует " + transport.getIdentifier());
     }
     void leaveTransport() {
         currentTransport = null;
@@ -35,11 +35,9 @@ public class Human {
             System.out.println("Не смогу столько пройти, недостаточно сил");
             return false;
         } else {
+            endurance -= landscape.getWalkCost() * distance;
             System.out.println("Прошел");
             return true;
         }
-    }
-    public void info () {
-
     }
 }

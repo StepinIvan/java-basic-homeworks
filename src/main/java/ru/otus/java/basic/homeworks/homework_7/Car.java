@@ -2,9 +2,20 @@ package ru.otus.java.basic.homeworks.homework_7;
 
 public class Car implements Transport{
     private int amountOfPetrol;
+    private String identifier = "Автомобиль";
+    private Human user = null;
 
     public Car(int amountOfPetrol) {
         this.amountOfPetrol = amountOfPetrol;
+    }
+
+    @Override
+    public String getIdentifier() {
+        return identifier;
+    }
+    @Override
+    public void setUser(Human user) {
+        this.user = user;
     }
 
     @Override
@@ -18,7 +29,7 @@ public class Car implements Transport{
             return false;
         } else {
             amountOfPetrol -= landscape.getCarCost() * distance;
-            System.out.println("Проехали");
+            System.out.println("Проехал");
             return true;
         }
     }
