@@ -28,7 +28,7 @@ public class Horse implements Transport{
             return false;
         } else {
             amountOfForces -= landscape.getHorseCost() * distance;
-            System.out.println("Проскакали на лошади");
+            System.out.println("Проскакал на лошади");
             return true;
         }
     }

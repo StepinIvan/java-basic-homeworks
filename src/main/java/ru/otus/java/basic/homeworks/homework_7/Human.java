@@ -18,7 +18,7 @@ public class Human {
     public void takeTransport(Transport transport) {
         currentTransport = transport;
         transport.setUser(this);
-        System.out.println(name + " использует " + transport.getIdentifier());
+        System.out.printf("%s использует %s%n",name,transport.getIdentifier());
     }
     void leaveTransport() {
         currentTransport = null;
