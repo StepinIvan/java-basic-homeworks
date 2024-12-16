@@ -28,6 +28,13 @@ public class Main {
         employees.add(new Employee("Диана", 22));
         System.out.printf(String.format("Имена всех сотрудников: %s\n", getEmployeesNames(employees)));
 
+        int minAge = 23;
+        System.out.printf(String.format("Список сотрудников старше %d: %s\n", minAge,
+                getEmployeesWithCertainAge(employees, minAge)));
+
+        System.out.println(checkAverageEmployeeAge(employees, 22));
+
+        System.out.println(findYoungerEmployee(employees));
     }
 
     /**
@@ -94,4 +101,45 @@ public class Main {
         }
         return names;
     }
+
+    /**
+     *
+     * @param employees - ArrayList of employees
+     * @param minAge - minimal age of employee
+     * @return ArrayList of employees with age greater of equal than minAge
+     */
+    public static ArrayList<String> getEmployeesWithCertainAge(ArrayList<Employee> employees, int minAge) {
+        ArrayList<Employee> minAgeEmployees = new ArrayList<>();
+        for (Employee employee : employees) {
+            if (employee.getAge() >= minAge) {
+                minAgeEmployees.add(employee);
+            }
+        }
+        return getEmployeesNames(minAgeEmployees);
+    }
+
+    /**
+     * @param employees - ArrayList of employees
+     * @param minAverageAge - minimal average age of employee
+     * @return boolean value tah shows that the average age of employees exceed the specified value or not
+     */
+    public static boolean checkAverageEmployeeAge(ArrayList<Employee> employees, int minAverageAge) {
+        ArrayList<Employee> minAgeEmployees = new ArrayList<>();
+        int sum = 0;
+        for (Employee employee : employees) {
+            sum += employee.getAge();
+        }
+        return sum/employees.size() > minAverageAge;
+    }
+
+    public static Employee findYoungerEmployee(ArrayList<Employee> employees) {
+        Employee youngestEmployee = employees.get(0);
+        for (Employee employee : employees) {
+            if (youngestEmployee.getAge() > employee.getAge()) {
+                youngestEmployee = employee;
+            }
+        }
+        return youngestEmployee;
+    }
+
 }
