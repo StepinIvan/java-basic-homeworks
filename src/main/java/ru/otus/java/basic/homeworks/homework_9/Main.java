@@ -36,10 +36,9 @@ public class Main {
 
         System.out.println(findYoungerEmployee(employees));
     }
-
     /**
-     * @param min - minimal value
-     * @param max - maximum value
+     * @param min minimal value
+     * @param max maximum value
      * @return ArrayList with a consistent set of values from min to max inclusive
      */
 
@@ -52,7 +51,7 @@ public class Main {
     }
 
     /**
-     * @param list - Integer ArrayList
+     * @param list Integer ArrayList
      * @return sum of all the ArrayList elements that are greater than 5
      */
     public static int sumArrayList(ArrayList<Integer> list) {
@@ -66,9 +65,9 @@ public class Main {
     }
 
     /**
-     * @param value - fill value
-     * @param list  - ArrayList link
-     * @return - ArrayList with value at each position
+     * @param value fill value
+     * @param list  ArrayList link
+     * @return ArrayList with value at each position
      */
     public static ArrayList<Integer> refillArrayList(int value, ArrayList<Integer> list) {
         for (Integer integer : list) {
@@ -78,9 +77,9 @@ public class Main {
     }
 
     /**
-     * @param number - value by which each element must be increased
-     * @param list   - ArrayList link
-     * @return - ArrayList with increased values
+     * @param number value by which each element must be increased
+     * @param list   ArrayList link
+     * @return ArrayList with increased values
      */
     public static ArrayList<Integer> increaseElements(int number, ArrayList<Integer> list) {
         for (Integer integer : list) {
@@ -90,9 +89,8 @@ public class Main {
     }
 
     /**
-     *
-     * @param employees - ArrayList of employees
-     * @return ArrayList employees names
+     * @param employees ArrayList of employees
+     * @return ArrayList of employees names
      */
     public static ArrayList<String> getEmployeesNames(ArrayList<Employee> employees) {
         ArrayList<String> names = new ArrayList<>();
@@ -103,10 +101,9 @@ public class Main {
     }
 
     /**
-     *
-     * @param employees - ArrayList of employees
-     * @param minAge - minimal age of employee
-     * @return ArrayList of employees with age greater of equal than minAge
+     * @param employees ArrayList of employees
+     * @param minAge minimal age of employee
+     * @return ArrayList of employees with age greater or equal than minAge
      */
     public static ArrayList<String> getEmployeesWithCertainAge(ArrayList<Employee> employees, int minAge) {
         ArrayList<Employee> minAgeEmployees = new ArrayList<>();
@@ -119,9 +116,9 @@ public class Main {
     }
 
     /**
-     * @param employees - ArrayList of employees
-     * @param minAverageAge - minimal average age of employee
-     * @return boolean value tah shows that the average age of employees exceed the specified value or not
+     * @param employees ArrayList of employees
+     * @param minAverageAge minimal average age of employee
+     * @return boolean value shows that the average age of employees exceed the specified value or not
      */
     public static boolean checkAverageEmployeeAge(ArrayList<Employee> employees, int minAverageAge) {
         ArrayList<Employee> minAgeEmployees = new ArrayList<>();
@@ -129,9 +126,14 @@ public class Main {
         for (Employee employee : employees) {
             sum += employee.getAge();
         }
-        return sum/employees.size() > minAverageAge;
+        return sum / employees.size() > minAverageAge;
     }
 
+    /**
+     *
+     * @param employees ArrayList of employees
+     * @return youngest employee
+     */
     public static Employee findYoungerEmployee(ArrayList<Employee> employees) {
         Employee youngestEmployee = employees.get(0);
         for (Employee employee : employees) {
