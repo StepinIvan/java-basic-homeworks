@@ -34,7 +34,7 @@ public class Main {
 
         System.out.println(checkAverageEmployeeAge(employees, 22));
 
-        System.out.println(findYoungerEmployee(employees));
+        System.out.printf(String.format("Самый молодой сотрудник: %s",findYoungerEmployee(employees)));
     }
     /**
      * @param min minimal value
@@ -70,8 +70,8 @@ public class Main {
      * @return ArrayList with value at each position
      */
     public static ArrayList<Integer> refillArrayList(int value, ArrayList<Integer> list) {
-        for (Integer integer : list) {
-            list.set(integer, value);
+        for (int i = 0; i < list.size(); i++) {
+            list.set(i, value);
         }
         return list;
     }
@@ -82,8 +82,8 @@ public class Main {
      * @return ArrayList with increased values
      */
     public static ArrayList<Integer> increaseElements(int number, ArrayList<Integer> list) {
-        for (Integer integer : list) {
-            list.set(integer, list.get(integer) + number);
+        for (int i = 0; i < list.size(); i++) {
+            list.set(i, list.get(i) + number);
         }
         return list;
     }
@@ -126,7 +126,7 @@ public class Main {
         for (Employee employee : employees) {
             sum += employee.getAge();
         }
-        return sum / employees.size() > minAverageAge;
+        return (double) sum / employees.size() > minAverageAge;
     }
 
     /**
@@ -135,6 +135,10 @@ public class Main {
      * @return youngest employee
      */
     public static Employee findYoungerEmployee(ArrayList<Employee> employees) {
+        if (employees.isEmpty()) {
+            System.out.println("Список сотрудников пуст");
+            return null;
+        }
         Employee youngestEmployee = employees.get(0);
         for (Employee employee : employees) {
             if (youngestEmployee.getAge() > employee.getAge()) {
@@ -143,5 +147,4 @@ public class Main {
         }
         return youngestEmployee;
     }
-
 }
