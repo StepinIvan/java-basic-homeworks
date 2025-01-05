@@ -16,7 +16,11 @@ public class Main {
         System.out.println(dataBase.isEmployee(Nikita.id));
 
         int[] array =  {3,2,5,7,1,23,7,9,67,2,3};
-        Sorting sort = new Sorting();
-        System.out.println(Arrays.toString(sort.bubbleSort(array)));
+        Sorting.bubbleSort(array);
+        System.out.println(Arrays.toString(array));
+
+        int[] array_2 =  {3,2,5,7,1,23,7,9,67,2,3};
+        Sorting.quickSort(array_2, 0, array_2.length - 1);
+        System.out.println(Arrays.toString(array_2));
     }
 }
