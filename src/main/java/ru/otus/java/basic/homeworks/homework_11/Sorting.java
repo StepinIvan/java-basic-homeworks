@@ -44,11 +44,11 @@ public class Sorting {
                 i++;
                 j--;
             }
-            if (lowIndex < j)
-                quickSort(array, lowIndex, j);
-
-            if (highIndex > i)
-                quickSort(array, i, highIndex);
         }
+        if (lowIndex < j)
+            quickSort(array, lowIndex, j);
+
+        if (highIndex > i)
+            quickSort(array, i, highIndex);
     }
 }
