@@ -26,7 +26,6 @@ public class Main {
 
         List<Integer> sortedList = List.of(1, 2, 3, 4, 5, 6, 7);
         BinarySearchTree bst = new BinarySearchTree(sortedList);
-
         System.out.printf(String.format("Поиск элемента 6: %d", bst.find(6)));
         System.out.println();
         System.out.printf(String.format("Поиск элемента 143: %d", bst.find(143)));
