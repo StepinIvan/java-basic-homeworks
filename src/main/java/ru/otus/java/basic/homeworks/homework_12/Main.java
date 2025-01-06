@@ -51,7 +51,7 @@ public class Main {
         System.out.println("Введите название файла с которым хотите продолжить работу: ");
         Scanner scanner_1 = new Scanner(System.in);
         String fileName = scanner_1.next();
-        System.out.println("Содержимое выбранного файла : ");
+        System.out.println("Содержимое выбранного файла: ");
         readFile(fileName);
         System.out.println("Введите строку, которую вы хотели бы добавить в текущий файл: ");
         Scanner scanner_2 = new Scanner(System.in);
@@ -60,7 +60,7 @@ public class Main {
         System.out.println("Содержимое файла после добавления: ");
         readFile(fileName);
 
-        System.out.println("Хотитет продолжить работу с файлами? (Ответить необходимо Да/Нет)");
+        System.out.println("Хотите продолжить работу с файлами? (Ответить необходимо Да/Нет)");
         scanAnswer();
     }
 
