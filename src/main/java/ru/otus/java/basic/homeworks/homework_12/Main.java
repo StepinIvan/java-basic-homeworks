@@ -23,24 +23,19 @@ public class Main {
     }
 
     public static void readFile(String fileName) {
-        try (FileInputStream inputStream = new FileInputStream(fileName);
-             BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-             InputStreamReader reader = new InputStreamReader(bufferedInputStream)) {
-            int symbol = reader.read();
-            while (symbol != -1) {
-                System.out.print((char) symbol);
-                symbol = reader.read();
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName, StandardCharsets.UTF_8))) {
+            String sentence;
+            while ((sentence = reader.readLine()) != null) {
+                System.out.println(sentence);
             }
-            System.out.println();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void writeToFile(String fileName, String sentence) {
-        try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(fileName, true))) {
-            byte[] buffer = sentence.getBytes(StandardCharsets.UTF_8);
-            outputStream.write(buffer);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, StandardCharsets.UTF_8, true))) {
+            writer.write(sentence);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -66,14 +61,16 @@ public class Main {
 
     public static void scanAnswer() {
         Scanner answerScanner = new Scanner(System.in);
-        String answer = answerScanner.nextLine();
-        if (answer.equals("Да")) {
-            workWithFile();
-        } else if (answer.equals("Нет")) {
-            System.exit(0);
-        } else {
-            System.out.println("Ответ не соответствует формату Да/Нет, попробуйте снова");
-            scanAnswer();
+        while (true) {
+            String answer = answerScanner.nextLine().trim();
+            if ("Да".equalsIgnoreCase(answer)) {
+                workWithFile();
+                break;
+            } else if ("Нет".equalsIgnoreCase(answer)) {
+                System.exit(0);
+            } else {
+                System.out.println("Ответ не соответствует формату Да/Нет, попробуйте снова:");
+            }
         }
     }
 }
