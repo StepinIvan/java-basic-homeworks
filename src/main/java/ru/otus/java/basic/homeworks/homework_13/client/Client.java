@@ -11,10 +11,10 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Вы подключились к серверу, для завершения сессия необходимо ввести команду exit");
         System.out.println("Вам доступны следующие математические операции: +, -, *, /, %, ln, lg, sqrt, sin, " +
-                "cos, th, abs");
+                "cos, tg, abs");
         System.out.println("Для использования +, -, *, /, % требуется вводить запрос в формате: число, число, " +
                 "операция (2, 2, +) ");
-        System.out.println("Для использования ln, lg, sqrt, sin, cos, th, abs требуется вводить запрос в формате: " +
+        System.out.println("Для использования ln, lg, sqrt, sin, cos, tg, abs требуется вводить запрос в формате: " +
                 "число, операция (2, +) ");
         while (true) {
             try (Socket socket = new Socket("localhost", 5000)) {

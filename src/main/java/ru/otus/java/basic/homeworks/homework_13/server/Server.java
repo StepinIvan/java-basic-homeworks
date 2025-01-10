@@ -13,6 +13,7 @@ public class Server {
         ServerSocket socket = new ServerSocket(5000);
         System.out.println("Server run.");
         while (true) {
+            String result;
             Socket client = socket.accept();
             ObjectInputStream inputStream = new ObjectInputStream(client.getInputStream());
             DataOutputStream outputStream = new DataOutputStream(client.getOutputStream());
@@ -27,8 +28,15 @@ public class Server {
                 continue;
             }
             System.out.println(Arrays.toString(userInput));
-            if (userInput.length > 3 || userInput.length < 2) throw new IOException("Неверный формат ввода");
-            String result;
+            try {
+                if (userInput.length > 3 || userInput.length < 2) throw new IOException("Неверный формат ввода");
+            } catch (IOException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+                result = "Ошибка: " + e.getMessage();
+                outputStream.writeUTF(result);
+                outputStream.flush();
+            }
+
             try {
                 if (userInput.length == 3) {
                     result = result(userInput[0], userInput[1], userInput[2]);
@@ -40,7 +48,6 @@ public class Server {
                 result = "Ошибка: " + e.getMessage();
                 outputStream.writeUTF(result);
                 outputStream.flush();
-                //break;
             }
             outputStream.writeUTF(result);
             outputStream.flush();
@@ -68,28 +75,26 @@ public class Server {
                 return String.valueOf(Double.parseDouble(firstValue) % Double.parseDouble(secondValue));
             default:
                 throw new IllegalArgumentException("Неверная операция. Используйте +, -, *, /, %, ln, lg, sqrt, " +
-                        "sin, cos, th, abs");
+                        "sin, cos, tg, abs");
         }
     }
 
     public static String result(String firstValue, String mathematicalOperation) {
-        switch (mathematicalOperation) {
+        switch (mathematicalOperation.toLowerCase()) {
             case "ln":
-                if (Double.parseDouble(firstValue) < 0) {
+                if (Double.parseDouble(firstValue) > 0) {
                     return String.valueOf(Math.log(Double.parseDouble(firstValue)));
                 } else {
-                    //return "Логарифм определён только для положительных чисел";
                     throw new IllegalArgumentException("Логарифм определён только для положительных чисел");
                 }
             case "lg":
-                if (Double.parseDouble(firstValue) < 0) {
+                if (Double.parseDouble(firstValue) > 0) {
                     return String.valueOf(Math.log10(Double.parseDouble(firstValue)));
                 } else {
-                    //return "Логарифм определён только для положительных чисел";
                     throw new IllegalArgumentException("Логарифм определён только для положительных чисел");
                 }
             case "sqrt":
-                if (Double.parseDouble(firstValue) < 0) {
+                if (Double.parseDouble(firstValue) > 0) {
                     return String.valueOf(Math.sqrt(Double.parseDouble(firstValue)));
                 } else {
                     throw new IllegalArgumentException("Квадратный корень определён только для положительных чисел");
