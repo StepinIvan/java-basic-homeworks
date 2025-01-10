@@ -28,76 +28,80 @@ public class Server {
             }
             System.out.println(Arrays.toString(userInput));
             if (userInput.length > 3 || userInput.length < 2) throw new IOException("Неверный формат ввода");
-            double result = 0;
+            String result;
             try {
                 if (userInput.length == 3) {
                     result = result(userInput[0], userInput[1], userInput[2]);
                 } else {
-                        result = result(userInput[0], userInput[1]);
+                    result = result(userInput[0], userInput[1]);
                 }
-            }catch(IllegalArgumentException e){
-                    System.out.printf(String.format("Ошибка: %s", e.getMessage()));
-                    System.out.println();
-                    break;
-                }
-                outputStream.writeDouble(result);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+                result = "Ошибка: " + e.getMessage();
+                outputStream.writeUTF(result);
                 outputStream.flush();
-                System.out.printf(String.format("%s %s %s = %f ", userInput[0], userInput[2], userInput[1], result));
-                System.out.println();
+                //break;
             }
+            outputStream.writeUTF(result);
+            outputStream.flush();
+            System.out.println("Результате выполнения операции: \n" + result);
+        }
 
     }
 
 
-    public static double result(String firstValue, String secondValue, String mathematicalOperation) {
+    public static String result(String firstValue, String secondValue, String mathematicalOperation) {
         switch (mathematicalOperation) {
             case "+":
-                return Double.parseDouble(firstValue) + Double.parseDouble(secondValue);
+                return String.valueOf(Double.parseDouble(firstValue) + Double.parseDouble(secondValue));
             case "-":
-                return Double.parseDouble(firstValue) - Double.parseDouble(secondValue);
+                return String.valueOf(Double.parseDouble(firstValue) - Double.parseDouble(secondValue));
             case "*":
-                return Double.parseDouble(firstValue) * Double.parseDouble(secondValue);
+                return String.valueOf(Double.parseDouble(firstValue) * Double.parseDouble(secondValue));
             case "/":
                 if (Double.parseDouble(secondValue) != 0) {
-                    return Double.parseDouble(firstValue) / Double.parseDouble(secondValue);
+                    return String.valueOf(Double.parseDouble(firstValue) / Double.parseDouble(secondValue));
                 } else {
                     throw new IllegalArgumentException("Деление на 0");
                 }
             case "%":
-                    return Double.parseDouble(firstValue) % Double.parseDouble(secondValue);
+                return String.valueOf(Double.parseDouble(firstValue) % Double.parseDouble(secondValue));
             default:
                 throw new IllegalArgumentException("Неверная операция. Используйте +, -, *, /, %, ln, lg, sqrt, " +
                         "sin, cos, th, abs");
         }
     }
-    public static double result(String firstValue, String mathematicalOperation) {
+
+    public static String result(String firstValue, String mathematicalOperation) {
         switch (mathematicalOperation) {
             case "ln":
                 if (Double.parseDouble(firstValue) < 0) {
-                    return Math.log(Double.parseDouble(firstValue));
+                    return String.valueOf(Math.log(Double.parseDouble(firstValue)));
                 } else {
+                    //return "Логарифм определён только для положительных чисел";
                     throw new IllegalArgumentException("Логарифм определён только для положительных чисел");
                 }
             case "lg":
                 if (Double.parseDouble(firstValue) < 0) {
-                    return Math.log10(Double.parseDouble(firstValue));
+                    return String.valueOf(Math.log10(Double.parseDouble(firstValue)));
                 } else {
+                    //return "Логарифм определён только для положительных чисел";
                     throw new IllegalArgumentException("Логарифм определён только для положительных чисел");
                 }
             case "sqrt":
                 if (Double.parseDouble(firstValue) < 0) {
-                    return Math.sqrt(Double.parseDouble(firstValue));
+                    return String.valueOf(Math.sqrt(Double.parseDouble(firstValue)));
                 } else {
                     throw new IllegalArgumentException("Квадратный корень определён только для положительных чисел");
                 }
             case "sin":
-                return Math.sin(Double.parseDouble(firstValue));
+                return String.valueOf(Math.sin(Double.parseDouble(firstValue)));
             case "cos":
-                return Math.cos(Double.parseDouble(firstValue));
+                return String.valueOf(Math.cos(Double.parseDouble(firstValue)));
             case "tg":
-                return Math.tan(Double.parseDouble(firstValue));
+                return String.valueOf(Math.tan(Double.parseDouble(firstValue)));
             case "abs":
-                return Math.abs(Double.parseDouble(firstValue));
+                return String.valueOf(Math.abs(Double.parseDouble(firstValue)));
             default:
                 throw new IllegalArgumentException("Неверная операция. Используйте +, -, *, /, %, ln, lg, sqrt, " +
                         "sin, cos, th, abs");

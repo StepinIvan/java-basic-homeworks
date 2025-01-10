@@ -13,21 +13,17 @@ public class ClientSample implements AutoCloseable {
     }
 
     public void send(String message) throws IOException {
-        String[] splittedUserMessage = message.split(",");
+        String[] splittedUserMessage = message.replaceAll("\\s", "").split(",");
         outputStream.writeObject(splittedUserMessage);
         outputStream.flush();
         try {
-            if (splittedUserMessage[2].equals("%")) {
-                Integer result = inputStream.readInt();
-                System.out.printf(String.format("%s %s %s = %d", splittedUserMessage[0], splittedUserMessage[2],
-                        splittedUserMessage[1],result));
-            } else {
-                Double result = inputStream.readDouble();
-                System.out.printf(String.format("%s %s %s = %f", splittedUserMessage[0], splittedUserMessage[2],
-                        splittedUserMessage[1],result));
-            }
-
-            System.out.println();
+//            if (splittedUserMessage[2].equals("%")) {
+//                Integer result = inputStream.readInt();
+//                System.out.printf(String.format("%s %s %s = %d", splittedUserMessage[0], splittedUserMessage[2],
+//                        splittedUserMessage[1],result));
+//            } else {
+            String result = inputStream.readUTF();
+            System.out.println("Результате выполнения операции: \n"+ result);
         } catch (EOFException e) {
             System.out.println("Сервер закрыл соединение.");
         }
