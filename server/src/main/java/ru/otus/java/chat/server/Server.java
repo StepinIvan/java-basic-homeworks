@@ -3,6 +3,7 @@ package ru.otus.java.chat.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -22,6 +23,10 @@ public class Server {
             while (true) {
                 Socket socket = serverSocket.accept();
                 subscribe(new ClientHandler(socket, this));
+                this.privateMessage("Добро пожаловать на сервер. " +
+                        "Для отправки личного сообщения его необходимо написать в формате \"/w username message\"\n" +
+                        "Для выхода с сервера напишите \"/exit\"",
+                        clientHandlerList.get(clientHandlerList.size() - 1).toString());
             }
 
         } catch (
@@ -40,6 +45,13 @@ public class Server {
     public void broadcastMessage(String message) {
         for (ClientHandler c: clientHandlerList) {
             c.sendMessage(message);
+        }
+    }
+    public void privateMessage(String message, String name) {
+        for (ClientHandler c: clientHandlerList) {
+            if (c.getUserName().equals(name)) {
+                c.sendMessage(message);
+            }
         }
     }
 }

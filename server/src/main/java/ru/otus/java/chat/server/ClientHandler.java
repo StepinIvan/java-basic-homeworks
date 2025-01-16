@@ -32,10 +32,15 @@ public class ClientHandler {
                 System.out.println("Клиент подключился, порт: " + socket.getPort());
                 while (true) {
                     String message = inputStream.readUTF();
+                    String[] splittedMessage = message.split(" ", 3);
                     if (message.startsWith("/")) {
                         if (message.equalsIgnoreCase("/exit")) {
                             sendMessage("/exitok");
                             break;
+                        }
+                        if (splittedMessage[0].equalsIgnoreCase("/w")) {
+                            server.privateMessage("(Private message) " + userName + ": "
+                                    + splittedMessage[2], splittedMessage[1]);
                         }
                     } else {
                         server.broadcastMessage(userName + ": " + message);
@@ -48,6 +53,11 @@ public class ClientHandler {
                 disconnect();
             }
         }).start();
+    }
+
+    @Override
+    public String toString() {
+        return userName;
     }
 
     public void sendMessage(String message) {
