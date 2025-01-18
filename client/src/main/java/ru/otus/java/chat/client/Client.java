@@ -1,5 +1,7 @@
 package ru.otus.java.chat.client;
 
+import lombok.Getter;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

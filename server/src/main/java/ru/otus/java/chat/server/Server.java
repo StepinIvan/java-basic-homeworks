@@ -72,4 +72,15 @@ public class Server {
         }
         return false;
     }
+    public boolean kickUser(String userName) {
+        changeFlag(userName);
+        privateMessage("/exitok", userName);
+        return true;
+    }
+    public void changeFlag(String userName) {
+        for (ClientHandler clientHandler : clientHandlerList) {
+            if (clientHandler.getUserName().equals(userName)) {
+            }
+        }
+    }
 }

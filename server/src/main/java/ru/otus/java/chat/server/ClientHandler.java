@@ -17,13 +17,14 @@ public class ClientHandler {
     @Getter
     @Setter
     private String userName;
+    private boolean inFlag;
 
     public ClientHandler(Socket socket, Server server) throws IOException {
         this.socket = socket;
         this.server = server;
         this.inputStream = new DataInputStream((socket.getInputStream()));
         this.outputStream = new DataOutputStream(socket.getOutputStream());
-
+        this.inFlag = true;
 
         new Thread(() -> {
             try {
@@ -35,6 +36,7 @@ public class ClientHandler {
                     String message = inputStream.readUTF();
                     if (message.equalsIgnoreCase("/exit")) {
                         sendMessage("/exitok");
+                        inFlag = false;
                         break;
                     }
                     if (message.startsWith("/auth ")) {
@@ -61,7 +63,7 @@ public class ClientHandler {
                         }
                     }
                 }
-                while (true) {
+                while (inFlag) {
                     String message = inputStream.readUTF();
                     String[] splittedMessage = message.split(" ", 3);
                     if (message.startsWith("/")) {
@@ -76,7 +78,16 @@ public class ClientHandler {
                     } else {
                         server.broadcastMessage(userName + ": " + message);
                     }
-
+                    if (message.startsWith("/kick ")) {
+                        String[] splittedKicking = message.split(" ");
+                        if (splittedKicking.length != 2) {
+                            sendMessage("Неверный формат команды");
+                            continue;
+                        }
+                        if (server.kickUser(splittedKicking[1])) {
+                            //break;
+                        }
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
