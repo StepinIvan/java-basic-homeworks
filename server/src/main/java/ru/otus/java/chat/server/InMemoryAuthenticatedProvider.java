@@ -1,5 +1,8 @@
 package ru.otus.java.chat.server;
 
+import lombok.Setter;
+import ru.otus.java.chat.server.utils.userRoles;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -9,11 +12,14 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider{
         private String login;
         private String password;
         private String userName;
+        @Setter
+        private userRoles userRole;
 
         public User(String login, String password, String userName) {
             this.login = login;
             this.password = password;
             this.userName = userName;
+            this.userRole = userRoles.USER;
         }
     }
     private List<User> users;
@@ -23,6 +29,7 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider{
         this.server = server;
         users = new CopyOnWriteArrayList<>();
         users.add(new User("John","123","HydraulicEngineer"));
+        users.get(0).setUserRole(userRoles.ADMIN);
         users.add(new User("Alex","321","Scientist"));
         users.add(new User("Jack","321","Mechanic"));
 
