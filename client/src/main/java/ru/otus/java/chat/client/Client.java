@@ -25,6 +25,14 @@ public class Client {
                         if (message.equalsIgnoreCase("/exitok")) {
                             break;
                         }
+                        if (message.startsWith("/authok ")) {
+                            System.out.println("Успешная аутентификация. Вы присоединилсь к чату. Ваше имя пользователя: " +
+                                    message.split(" ")[1]);
+                        }
+                        if (message.startsWith("/regok ")) {
+                            System.out.println("Успешная регистрация пользователя с никнеймом: " +
+                                    message.split(" ")[1]);
+                        }
                     } else {
                         System.out.println(message);
                     }

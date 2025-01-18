@@ -1,32 +1,33 @@
 package ru.otus.java.chat.server;
 
+import lombok.Getter;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Server {
     private int port;
     private List<ClientHandler> clientHandlerList;
+    @Getter
+    private AuthenticatedProvider authenticatedProvider;
 
     public Server(int port) {
         this.port = port;
         clientHandlerList = new CopyOnWriteArrayList<>();
+        authenticatedProvider = new InMemoryAuthenticatedProvider(this);
     }
 
     public void start() {
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Сервер запущен на порту: " + port);
+            authenticatedProvider.initialize();
             while (true) {
                 Socket socket = serverSocket.accept();
-                subscribe(new ClientHandler(socket, this));
-                this.privateMessage("Добро пожаловать на сервер. " +
-                        "Для отправки личного сообщения его необходимо написать в формате \"/w username message\"\n" +
-                        "Для выхода с сервера напишите \"/exit\"",
-                        clientHandlerList.get(clientHandlerList.size() - 1).toString());
+                new ClientHandler(socket, this);
             }
 
         } catch (
@@ -53,5 +54,22 @@ public class Server {
                 c.sendMessage(message);
             }
         }
+    }
+    public void sendServerInformation(String name) {
+        for (ClientHandler c: clientHandlerList) {
+            if (c.getUserName().equals(name)) {
+                c.sendMessage("Добро пожаловать на сервер. " +
+                        "Для отправки личного сообщения его необходимо написать в формате \"/w username message\"\n" +
+                        "Для выхода с сервера напишите \"/exit\")");
+            }
+        }
+    }
+    public boolean isUserNameBusy(String userName) {
+        for (ClientHandler clientHandler : clientHandlerList) {
+                if (clientHandler.getUserName().equals(userName)) {
+                    return true;
+                }
+        }
+        return false;
     }
 }
