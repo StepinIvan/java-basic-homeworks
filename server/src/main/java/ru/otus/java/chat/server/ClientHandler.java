@@ -17,6 +17,7 @@ public class ClientHandler {
     @Getter
     @Setter
     private String userName;
+    @Setter
     private boolean inFlag;
 
     public ClientHandler(Socket socket, Server server) throws IOException {
@@ -65,8 +66,8 @@ public class ClientHandler {
                 }
                 while (inFlag) {
                     String message = inputStream.readUTF();
-                    String[] splittedMessage = message.split(" ", 3);
                     if (message.startsWith("/")) {
+                        String[] splittedMessage = message.split(" ", 3);
                         if (message.equalsIgnoreCase("/exit")) {
                             sendMessage("/exitok");
                             break;
@@ -79,13 +80,16 @@ public class ClientHandler {
                         server.broadcastMessage(userName + ": " + message);
                     }
                     if (message.startsWith("/kick ")) {
-                        String[] splittedKicking = message.split(" ");
-                        if (splittedKicking.length != 2) {
-                            sendMessage("Неверный формат команды");
-                            continue;
-                        }
-                        if (server.kickUser(splittedKicking[1])) {
-                            //break;
+                        if (true) { // проверка, является ли пользователь администратором
+                            String[] splittedMessage = message.split(" ");
+                            if (splittedMessage.length != 2) {
+                                sendMessage("Неверный формат команды. Используйте: /kick username");
+                                continue;
+                            }
+                            String userNameToKick = splittedMessage[1];
+                            server.kickUser(userNameToKick);
+                        } else {
+                            sendMessage("У вас нет прав для выполнения этой команды.");
                         }
                     }
                 }
@@ -133,5 +137,8 @@ public class ClientHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void changeFlag() {
+        inFlag = false;
     }
 }

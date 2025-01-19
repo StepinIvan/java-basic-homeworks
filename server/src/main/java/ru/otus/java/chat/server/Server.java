@@ -72,14 +72,12 @@ public class Server {
         }
         return false;
     }
-    public boolean kickUser(String userName) {
-        changeFlag(userName);
-        privateMessage("/exitok", userName);
-        return true;
-    }
-    public void changeFlag(String userName) {
+    public void kickUser (String userName) {
         for (ClientHandler clientHandler : clientHandlerList) {
             if (clientHandler.getUserName().equals(userName)) {
+                clientHandler.sendMessage("Вы были отключены администратором.");
+                privateMessage("/exitok", userName);
+                break;
             }
         }
     }

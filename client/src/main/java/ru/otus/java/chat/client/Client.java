@@ -13,6 +13,7 @@ public class Client {
     private DataOutputStream outputStream;
     private DataInputStream inputStream;
     private Scanner scanner;
+    private boolean flag = true;
 
     public Client() throws IOException {
         scanner = new Scanner(System.in);
@@ -46,7 +47,7 @@ public class Client {
             }
         }).start();
 
-        while (true) {
+        while (flag) {
             String message = scanner.nextLine();
             outputStream.writeUTF(message);
             if (message.equalsIgnoreCase("/exit")) {
@@ -79,5 +80,8 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void changeFlag() {
+        flag = false;
     }
 }
