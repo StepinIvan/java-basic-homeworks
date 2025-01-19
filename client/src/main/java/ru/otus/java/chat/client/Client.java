@@ -1,5 +1,7 @@
 package ru.otus.java.chat.client;
 
+import lombok.Getter;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,6 +13,7 @@ public class Client {
     private DataOutputStream outputStream;
     private DataInputStream inputStream;
     private Scanner scanner;
+    private boolean flag = true;
 
     public Client() throws IOException {
         scanner = new Scanner(System.in);
@@ -25,6 +28,14 @@ public class Client {
                         if (message.equalsIgnoreCase("/exitok")) {
                             break;
                         }
+                        if (message.startsWith("/authok ")) {
+                            System.out.println("Успешная аутентификация. Вы присоединилсь к чату. Ваше имя пользователя: " +
+                                    message.split(" ")[1]);
+                        }
+                        if (message.startsWith("/regok ")) {
+                            System.out.println("Успешная регистрация пользователя с никнеймом: " +
+                                    message.split(" ")[1]);
+                        }
                     } else {
                         System.out.println(message);
                     }
@@ -36,7 +47,7 @@ public class Client {
             }
         }).start();
 
-        while (true) {
+        while (flag) {
             String message = scanner.nextLine();
             outputStream.writeUTF(message);
             if (message.equalsIgnoreCase("/exit")) {
@@ -69,5 +80,9 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void changeFlag() {
+        flag = false;
     }
 }
