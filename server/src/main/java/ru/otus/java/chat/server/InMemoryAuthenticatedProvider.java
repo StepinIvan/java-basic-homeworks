@@ -7,7 +7,7 @@ import ru.otus.java.chat.server.utils.userRoles;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class InMemoryAuthenticatedProvider implements AuthenticatedProvider{
+public class InMemoryAuthenticatedProvider implements AuthenticatedProvider {
 
     private class User {
         private String login;
@@ -24,16 +24,17 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider{
             this.userRole = userRoles.USER;
         }
     }
+
     private List<User> users;
     private Server server;
 
     public InMemoryAuthenticatedProvider(Server server) {
         this.server = server;
         users = new CopyOnWriteArrayList<>();
-        users.add(new User("John","123","HydraulicEngineer"));
+        users.add(new User("John", "123", "HydraulicEngineer"));
         users.get(0).setUserRole(userRoles.ADMIN);
-        users.add(new User("Alex","321","Scientist"));
-        users.add(new User("Jack","321","Mechanic"));
+        users.add(new User("Alex", "321", "Scientist"));
+        users.add(new User("Jack", "321", "Mechanic"));
 
     }
 
@@ -42,7 +43,7 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider{
         System.out.println("Инициализация InMemoryAuthenticatedProvider");
     }
 
-    private String getUserNameByLoginAndPassword (String login, String password) {
+    private String getUserNameByLoginAndPassword(String login, String password) {
         for (User user : users) {
             if (user.login.equals(login) && user.password.equals(password)) {
                 return user.userName;
@@ -50,9 +51,10 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider{
         }
         return null;
     }
+
     @Override
     public boolean authenticate(ClientHandler clientHandler, String login, String password) {
-        String authUserName = getUserNameByLoginAndPassword(login,password);
+        String authUserName = getUserNameByLoginAndPassword(login, password);
         if (authUserName == null) {
             clientHandler.sendMessage("Неверный логин/пароль");
             return false;
@@ -68,22 +70,24 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider{
         return true;
     }
 
-    private boolean isLoginAlreadyExist (String login) {
+    private boolean isLoginAlreadyExist(String login) {
         for (User user : users) {
-            if(user.login.equals(login)) {
+            if (user.login.equals(login)) {
                 return true;
             }
         }
         return false;
     }
-    private boolean isUserNameAlreadyExist (String userName) {
+
+    private boolean isUserNameAlreadyExist(String userName) {
         for (User user : users) {
-            if(user.userName.equals(userName)) {
+            if (user.userName.equals(userName)) {
                 return true;
             }
         }
         return false;
     }
+
     @Override
     public boolean registration(ClientHandler clientHandler, String login, String password, String userName) {
         if (login.length() < 3 || password.length() < 3 || userName.length() < 3) {
@@ -108,7 +112,7 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider{
     @Override
     public userRoles getUserRole(String userName) {
         for (User user : users) {
-            if(user.userName.equals(userName)) {
+            if (user.userName.equals(userName)) {
                 return user.getUserRole();
             }
         }

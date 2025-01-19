@@ -36,27 +36,31 @@ public class Server {
         }
     }
 
-    public void subscribe (ClientHandler clientHandler) {
+    public void subscribe(ClientHandler clientHandler) {
         clientHandlerList.add(clientHandler);
     }
-    public void unsubscribe (ClientHandler clientHandler) {
+
+    public void unsubscribe(ClientHandler clientHandler) {
         clientHandlerList.remove(clientHandler);
         broadcastMessage("Из чата вышел: " + clientHandler.getUserName());
     }
+
     public void broadcastMessage(String message) {
-        for (ClientHandler c: clientHandlerList) {
+        for (ClientHandler c : clientHandlerList) {
             c.sendMessage(message);
         }
     }
+
     public void privateMessage(String message, String name) {
-        for (ClientHandler c: clientHandlerList) {
+        for (ClientHandler c : clientHandlerList) {
             if (c.getUserName().equals(name)) {
                 c.sendMessage(message);
             }
         }
     }
+
     public void sendServerInformation(String name) {
-        for (ClientHandler c: clientHandlerList) {
+        for (ClientHandler c : clientHandlerList) {
             if (c.getUserName().equals(name)) {
                 c.sendMessage("Добро пожаловать на сервер. " +
                         "Для отправки личного сообщения его необходимо написать в формате \"/w username message\"\n" +
@@ -64,16 +68,17 @@ public class Server {
             }
         }
     }
+
     public boolean isUserNameBusy(String userName) {
         for (ClientHandler clientHandler : clientHandlerList) {
-                if (clientHandler.getUserName().equals(userName)) {
-                    return true;
-                }
+            if (clientHandler.getUserName().equals(userName)) {
+                return true;
+            }
         }
         return false;
     }
-    public void kickUser (String userName) {
 
+    public void kickUser(String userName) {
         for (ClientHandler clientHandler : clientHandlerList) {
             if (clientHandler.getUserName().equals(userName)) {
                 clientHandler.sendMessage("Вы были отключены администратором.");

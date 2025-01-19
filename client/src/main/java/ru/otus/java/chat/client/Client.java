@@ -81,6 +81,7 @@ public class Client {
             e.printStackTrace();
         }
     }
+
     public void changeFlag() {
         flag = false;
     }
