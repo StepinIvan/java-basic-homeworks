@@ -73,6 +73,7 @@ public class Server {
         return false;
     }
     public void kickUser (String userName) {
+
         for (ClientHandler clientHandler : clientHandlerList) {
             if (clientHandler.getUserName().equals(userName)) {
                 clientHandler.sendMessage("Вы были отключены администратором.");

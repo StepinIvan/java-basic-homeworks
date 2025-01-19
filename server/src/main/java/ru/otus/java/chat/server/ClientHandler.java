@@ -2,6 +2,7 @@ package ru.otus.java.chat.server;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.otus.java.chat.server.utils.userRoles;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -46,7 +47,7 @@ public class ClientHandler {
                             sendMessage("Неверный формат команды");
                             continue;
                         }
-                        if (server.getAuthenticatedProvider().authenticate(this,splittedAuthorization[1],
+                        if (server.getAuthenticatedProvider().authenticate(this, splittedAuthorization[1],
                                 splittedAuthorization[2])) {
                             server.sendServerInformation(this.userName);
                             break;
@@ -59,7 +60,7 @@ public class ClientHandler {
                             continue;
                         }
                         if (server.getAuthenticatedProvider().registration(this,
-                                splittedAuthorization[1], splittedAuthorization[2],splittedAuthorization[3])){
+                                splittedAuthorization[1], splittedAuthorization[2], splittedAuthorization[3])) {
                             break;
                         }
                     }
@@ -80,12 +81,12 @@ public class ClientHandler {
                         server.broadcastMessage(userName + ": " + message);
                     }
                     if (message.startsWith("/kick ")) {
-                        if (true) { // проверка, является ли пользователь администратором
-                            String[] splittedMessage = message.split(" ");
-                            if (splittedMessage.length != 2) {
-                                sendMessage("Неверный формат команды. Используйте: /kick username");
-                                continue;
-                            }
+                        String[] splittedMessage = message.split(" ");
+                        if (splittedMessage.length != 2) {
+                            sendMessage("Неверный формат команды. Используйте: /kick username");
+                            continue;
+                        }
+                        if (server.getAuthenticatedProvider().getUserRole(userName) == userRoles.ADMIN) {
                             String userNameToKick = splittedMessage[1];
                             server.kickUser(userNameToKick);
                         } else {
@@ -138,6 +139,7 @@ public class ClientHandler {
             e.printStackTrace();
         }
     }
+
     public void changeFlag() {
         inFlag = false;
     }
