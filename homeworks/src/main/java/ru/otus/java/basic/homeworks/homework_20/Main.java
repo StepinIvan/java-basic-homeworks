@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         File file = new File(".");
         FileFilter filter = new FileFilter() {
             public boolean accept(File f) {
@@ -16,18 +16,21 @@ public class Main {
         System.out.println();
 
         System.out.println("Введите название файла в котором необходимо подсчитать количество последовательностей: ");
-        Scanner fileNameScanner = new Scanner(System.in);
-        String fileName = fileNameScanner.next().trim();
-        System.out.println("Введите искомую последовательность: ");
-        Scanner searchStringScanner = new Scanner(System.in);
-        String searchString = searchStringScanner.next();
+        String fileName;
+        String searchString;
+        try (Scanner fileNameScanner = new Scanner(System.in);
+             Scanner searchStringScanner = new Scanner(System.in)) {
+            fileName = fileNameScanner.next().trim();
+            System.out.println("Введите искомую последовательность: ");
+            searchString = searchStringScanner.next();
+        }
         System.out.println("В выбранном файле количество последовательностей равно: "
                 + countStringOccurrence(fileName, searchString));
     }
 
     public static int countStringOccurrence(String fileName, String searchString) {
         int count = 0;
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 int index = 0;
