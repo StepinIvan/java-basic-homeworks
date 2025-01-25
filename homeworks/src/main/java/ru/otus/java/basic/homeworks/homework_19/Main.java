@@ -44,5 +44,6 @@ public class Main {
         System.out.println(fruits);
         System.out.println(apples);
         System.out.println(oranges);
+
     }
 }
