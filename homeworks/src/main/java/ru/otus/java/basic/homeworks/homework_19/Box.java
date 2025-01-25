@@ -24,7 +24,7 @@ public class Box<T extends Fruit> {
 
     @Override
     public String toString() {
-        return "Box{" + fruits.toString() +
+        return "Box{" + fruits +
                 '}';
     }
 
