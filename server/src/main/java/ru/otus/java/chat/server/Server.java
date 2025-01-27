@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -21,7 +22,11 @@ public class Server {
     }
 
     public void start() {
-
+//        try {
+//            new JDBC().connect();
+//        } catch (ClassNotFoundException | SQLException e) {
+//            throw new RuntimeException(e);
+//        }
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Сервер запущен на порту: " + port);
             authenticatedProvider.initialize();
