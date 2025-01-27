@@ -19,9 +19,9 @@ public class Main {
         if (oneIndex == -1) {
             throw new RuntimeException("Во входном массиве отсутствуют единицы");
         }
-        int[] newArray = new int[inArray.length - oneIndex];
-        for (int i = oneIndex; i < inArray.length; i++) {
-            newArray[i - oneIndex] = inArray[i];
+        int[] newArray = new int[inArray.length - oneIndex - 1];
+        for (int i = oneIndex; i < inArray.length - 1; i++) {
+            newArray[i - oneIndex] = inArray[i + 1];
         }
         return newArray;
     }
