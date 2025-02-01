@@ -5,9 +5,14 @@ import java.util.Map;
 
 public class HttpRequest {
     private String rawRequest;
-    private String method;
+    private HttpMethod method;
     private String uri;
     private Map<String, String> parameters;
+    private Map<String, String> headers;
+
+    public String getRoutingKey() {
+        return method + " " + uri;
+    }
 
     public String getUri() {
         return uri;
@@ -23,9 +28,10 @@ public class HttpRequest {
     }
     private void parse() {
         this.parameters = new HashMap<>();
+        this.headers = new HashMap<>();
         int startIndex = rawRequest.indexOf(' ');
         int endIndex = rawRequest.indexOf(' ', startIndex + 1);
-        this.method = rawRequest.substring(0, startIndex);
+        this.method = HttpMethod.valueOf(rawRequest.substring(0, startIndex));
         this.uri = rawRequest.substring(startIndex + 1, endIndex);
         if (this.uri.contains("?")) {
             String[] tokens = this.uri.split("[?]");
@@ -36,11 +42,21 @@ public class HttpRequest {
                 this.parameters.put(keyValue[0],keyValue[1]);
             }
         }
+        rawRequest.lines()
+                .skip(1)
+                .takeWhile(s -> !s.isBlank())
+                .forEach(
+                s -> {
+                    String[] keyValue =s.split(": ");
+                    headers.put(keyValue[0], keyValue[1]);
+                }
+        );
     }
 
     public void info(boolean showRawRequest) {
         System.out.println("METHOD: " + method);
         System.out.println("URI: " + uri);
+        System.out.println("HEADERS: " + headers);
         if (showRawRequest) {
             System.out.println(rawRequest);
         }
