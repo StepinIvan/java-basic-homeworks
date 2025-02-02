@@ -1,5 +1,7 @@
 package ru.otus.java.basic.homeworks.homework_23;
 
+import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ public class HttpRequest {
     private Map<String, String> parameters;
     private Map<String, String> headers;
     private Exception errorCause;
+    private final Logger LOGGER;
 
     public void setErrorCause(Exception errorCause) {
         this.errorCause = errorCause;
@@ -30,8 +33,9 @@ public class HttpRequest {
         return uri;
     }
 
-    public HttpRequest(String rawRequest) {
+    public HttpRequest(String rawRequest, Logger LOGGER) {
         this.rawRequest = rawRequest;
+        this.LOGGER = LOGGER;
         parse();
     }
 
@@ -74,10 +78,10 @@ public class HttpRequest {
     }
 
     public void info(boolean showRawRequest) {
-        System.out.println("METHOD: " + method);
-        System.out.println("URI: " + uri);
-        System.out.println("HEADERS: " + headers);
-        System.out.println("BODY: " + body);
+        LOGGER.info("METHOD: " + method);
+        LOGGER.info("URI: " + uri);
+        LOGGER.info("HEADERS: " + headers);
+        LOGGER.info("BODY: " + body);
         if (showRawRequest) {
             System.out.println(rawRequest);
         }

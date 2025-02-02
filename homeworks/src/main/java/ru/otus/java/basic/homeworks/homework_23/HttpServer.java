@@ -5,12 +5,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class HttpServer {
     private int port;
     private Dispatcher dispatcher;
     private ExecutorService threadPool;
     private int numberOfThreads = 10;
+    private static final Logger LOGGER = LogManager.getLogger(HttpServer.class);
 
 
     public HttpServer(int port) {
@@ -21,10 +24,10 @@ public class HttpServer {
 
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Сервер запущен на порту: " + port);
+            LOGGER.info("Сервер запущен на порту: " + port);
             while (true) {
                 Socket socket = serverSocket.accept();
-                System.out.println("Подключился новый клиент");
+                LOGGER.info("Подключился новый клиент");
                 threadPool.execute(() -> {
                     try(socket) {
                         byte[] buffer = new byte[8192];
@@ -32,7 +35,7 @@ public class HttpServer {
                         if (n < 0) {
                             return;
                         }
-                        HttpRequest request = new HttpRequest(new String(buffer, 0, n));
+                        HttpRequest request = new HttpRequest(new String(buffer, 0, n), LOGGER);
                         request.info(false);
                         dispatcher.execute(request, socket.getOutputStream());
                     } catch (IOException e) {
