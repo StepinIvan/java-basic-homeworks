@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-public class GetProductProcessor implements RequestProcessor{
+public class Default500Processor implements RequestProcessor {
     @Override
     public void execute(HttpRequest request, OutputStream output) throws IOException {
-        String response = "HTTP/1.1 200 OK\r\n" +
+        String response = "HTTP/1.1 500 Internal Server Error\r\n" +
                 "Content-Type: text/html\r\n" +
                 "\r\n" +
-                "<html><body><h1>GET Product</h1></body></html";
+                "<html><body><h1>Internal Server Error: something wrong...</h1></body></html";
         output.write(response.getBytes(StandardCharsets.UTF_8));
     }
 }

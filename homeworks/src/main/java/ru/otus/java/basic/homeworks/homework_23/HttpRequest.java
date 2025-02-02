@@ -7,8 +7,20 @@ public class HttpRequest {
     private String rawRequest;
     private HttpMethod method;
     private String uri;
+    private String body;
     private Map<String, String> parameters;
     private Map<String, String> headers;
+    private Exception errorCause;
+
+    public void setErrorCause(Exception errorCause) {
+        this.errorCause = errorCause;
+    }
+
+    public Exception getErrorCause() {
+        return errorCause;
+    }
+
+
 
     public String getRoutingKey() {
         return method + " " + uri;
@@ -23,8 +35,15 @@ public class HttpRequest {
         parse();
     }
 
+    public String getBody() {
+        return body;
+    }
+
     public String getParameter(String key) {
         return parameters.get(key);
+    }
+    public boolean containsParameter(String key) {
+        return parameters.containsKey(key);
     }
     private void parse() {
         this.parameters = new HashMap<>();
@@ -51,12 +70,14 @@ public class HttpRequest {
                     headers.put(keyValue[0], keyValue[1]);
                 }
         );
+        this.body = rawRequest.substring(rawRequest.indexOf("\r\n\r\n") + 4,rawRequest.length());
     }
 
     public void info(boolean showRawRequest) {
         System.out.println("METHOD: " + method);
         System.out.println("URI: " + uri);
         System.out.println("HEADERS: " + headers);
+        System.out.println("BODY: " + body);
         if (showRawRequest) {
             System.out.println(rawRequest);
         }
