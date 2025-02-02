@@ -35,9 +35,7 @@ public class UserServiceJDBCImpl implements UserServiceJDBC {
                     String login = resultSet.getString(2);
                     String password = resultSet.getString(3);
                     String userName = resultSet.getString(4);
-                    //users.add(new User("John", "123", "HydraulicEngineer"));
                     User user = new User (id, login, password, userName);
-                    //User user = new User(id, password, mail);
                     allUsers.add(user);
                 }
             }

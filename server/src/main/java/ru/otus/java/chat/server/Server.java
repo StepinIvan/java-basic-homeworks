@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -29,21 +28,6 @@ public class Server {
     }
 
     public void start() {
-        //
-//        try {
-            //userServiceJDBC = new UserServiceJDBCImpl();
-            //usersList = userServiceJDBC.getAll();
-            //System.out.println("userServiceJDBC.getAll() = " + userServiceJDBC.getAll());
-//            for (User user : users) {
-//                System.out.println("Пользователь с id = " + user.getId()
-//                        + " является администратором?\n"
-//                        + userServiceJDBC.isAdmin(user.getId())
-//                );
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-        //
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Сервер запущен на порту: " + port);
             authenticatedProvider.initialize();
