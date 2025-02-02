@@ -2,7 +2,6 @@ package ru.otus.java.chat.server;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.otus.java.chat.server.utils.userRoles;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -86,7 +85,7 @@ public class ClientHandler {
                             sendMessage("Неверный формат команды. Используйте: /kick username");
                             continue;
                         }
-                        if (server.getAuthenticatedProvider().getUserRole(userName) == userRoles.ADMIN) {
+                        if (server.getAuthenticatedProvider().isAdmin(userName)) {
                             String userNameToKick = splittedMessage[1];
                             server.kickUser(userNameToKick);
                         } else {

@@ -9,32 +9,32 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class InMemoryAuthenticatedProvider implements AuthenticatedProvider {
 
-    private class User {
-        private String login;
-        private String password;
-        private String userName;
-        @Setter
-        @Getter
-        private userRoles userRole;
-
-        public User(String login, String password, String userName) {
-            this.login = login;
-            this.password = password;
-            this.userName = userName;
-            this.userRole = userRoles.USER;
-        }
-    }
+//    private class User {
+//        private String login;
+//        private String password;
+//        private String userName;
+//        @Setter
+//        @Getter
+//        private userRoles userRole;
+//
+//        public User(String login, String password, String userName) {
+//            this.login = login;
+//            this.password = password;
+//            this.userName = userName;
+//            this.userRole = userRoles.USER;
+//        }
+//    }
 
     private List<User> users;
     private Server server;
 
     public InMemoryAuthenticatedProvider(Server server) {
         this.server = server;
-        users = new CopyOnWriteArrayList<>();
-        users.add(new User("John", "123", "HydraulicEngineer"));
-        users.get(0).setUserRole(userRoles.ADMIN);
-        users.add(new User("Alex", "321", "Scientist"));
-        users.add(new User("Jack", "321", "Mechanic"));
+        users = server.getUsersList();
+//        users.add(new User("John", "123", "HydraulicEngineer"));
+//        users.get(0).setUserRole(userRoles.ADMIN);
+//        users.add(new User("Alex", "321", "Scientist"));
+//        users.add(new User("Jack", "321", "Mechanic"));
 
     }
 
@@ -45,8 +45,8 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider {
 
     private String getUserNameByLoginAndPassword(String login, String password) {
         for (User user : users) {
-            if (user.login.equals(login) && user.password.equals(password)) {
-                return user.userName;
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+                return user.getUserName();
             }
         }
         return null;
@@ -72,7 +72,7 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider {
 
     private boolean isLoginAlreadyExist(String login) {
         for (User user : users) {
-            if (user.login.equals(login)) {
+            if (user.getLogin().equals(login)) {
                 return true;
             }
         }
@@ -81,7 +81,7 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider {
 
     private boolean isUserNameAlreadyExist(String userName) {
         for (User user : users) {
-            if (user.userName.equals(userName)) {
+            if (user.getUserName().equals(userName)) {
                 return true;
             }
         }
@@ -102,7 +102,7 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider {
             clientHandler.sendMessage("Указанный никнейм занят");
             return false;
         }
-        users.add(new User(login, password, userName));
+        users.add(new User(users.size() + 1,login, password, userName));
         clientHandler.setUserName(userName);
         server.subscribe(clientHandler);
         clientHandler.sendMessage("/regok " + userName);
@@ -110,12 +110,24 @@ public class InMemoryAuthenticatedProvider implements AuthenticatedProvider {
     }
 
     @Override
-    public userRoles getUserRole(String userName) {
-        for (User user : users) {
-            if (user.userName.equals(userName)) {
-                return user.getUserRole();
+    public boolean isAdmin(String userName) {
+        User user = null;
+        for (User us : users) {
+            if (us.getUserName().equals(userName)) {
+                user = us;
             }
         }
-        return null;
+        return server.getUserServiceJDBC().isAdmin(user.getId());
     }
+
+
+//    @Override
+//    public userRoles getUserRole(String userName) {
+//        for (User user : users) {
+//            if (user.getUserName().equals(userName)) {
+//                return user.getUserRole();
+//            }
+//        }
+//        return null;
+//    }
 }
