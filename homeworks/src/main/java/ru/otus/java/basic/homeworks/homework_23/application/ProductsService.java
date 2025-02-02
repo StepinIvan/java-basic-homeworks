@@ -34,4 +34,8 @@ public class ProductsService {
     public void deleteProduct() {
         products.clear();
     }
+    public void updateProduct(int id, String title) {
+        Product product = products.get(id);
+        product.setTitle(title);
+    }
 }
