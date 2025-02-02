@@ -1,6 +1,7 @@
 package ru.otus.java.basic.homeworks.homework_23.processors;
 
 import com.google.gson.Gson;
+import ru.otus.java.basic.homeworks.homework_23.BadRequestException;
 import ru.otus.java.basic.homeworks.homework_23.HttpRequest;
 import ru.otus.java.basic.homeworks.homework_23.application.Product;
 import ru.otus.java.basic.homeworks.homework_23.application.ProductsService;
@@ -17,9 +18,12 @@ public class DeleteProductProcessor implements RequestProcessor{
     }
     @Override
     public void execute(HttpRequest request, OutputStream output) throws IOException {
-        Gson gson = new Gson();
-        Product deletingProduct = gson.fromJson(request.getBody(),Product.class);
-        productsService.deleteProduct(deletingProduct);
+        if (request.containsParameter("id")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            productsService.deleteProduct(id - 1);
+        } else {
+            productsService.deleteProduct();
+        }
         String response = "HTTP/1.1 204 Delete successfully\r\n" +
                 "Content-Type: text/html\r\n" +
                 "\r\n";
