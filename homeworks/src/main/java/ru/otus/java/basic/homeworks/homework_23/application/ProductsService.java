@@ -28,4 +28,7 @@ public class ProductsService {
         Long newId = products.stream().mapToLong(Product::getId).max().getAsLong() + 1;
         products.add(new Product(newId, product.getTitle()));
     }
+    public void deleteProduct(Product product) {
+        products.remove(product);
+    }
 }
