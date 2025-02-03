@@ -28,8 +28,8 @@ public class ProductsService {
         Long newId = products.stream().mapToLong(Product::getId).max().getAsLong() + 1;
         products.add(new Product(newId, product.getTitle()));
     }
-    public void deleteProduct(int id) {
-        products.remove(id);
+    public void deleteProduct(String title) {
+        products.removeIf(product -> product.getTitle().equals(title));
     }
     public void deleteProduct() {
         products.clear();
