@@ -36,7 +36,7 @@ public class HttpServer {
                             return;
                         }
                         HttpRequest request = new HttpRequest(new String(buffer, 0, n));
-                        request.info(false);
+                        request.info();
                         dispatcher.execute(request, socket.getOutputStream());
                     } catch (IOException e) {
                         e.printStackTrace();

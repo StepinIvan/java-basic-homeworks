@@ -77,13 +77,14 @@ public class HttpRequest {
         this.body = rawRequest.substring(rawRequest.indexOf("\r\n\r\n") + 4,rawRequest.length());
     }
 
-    public void info(boolean showRawRequest) {
+    public void info() {
         LOGGER.info("METHOD: " + method);
         LOGGER.info("URI: " + uri);
         LOGGER.info("HEADERS: " + headers);
         LOGGER.info("BODY: " + body);
-        if (showRawRequest) {
-            System.out.println(rawRequest);
-        }
+        LOGGER.debug("Raw request: " + rawRequest);
+//        if (showRawRequest) {
+//            System.out.println(rawRequest);
+//        }
     }
 }
