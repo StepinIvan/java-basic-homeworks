@@ -35,7 +35,7 @@ public class HttpServer {
                         if (n < 0) {
                             return;
                         }
-                        HttpRequest request = new HttpRequest(new String(buffer, 0, n), LOGGER);
+                        HttpRequest request = new HttpRequest(new String(buffer, 0, n));
                         request.info(false);
                         dispatcher.execute(request, socket.getOutputStream());
                     } catch (IOException e) {
