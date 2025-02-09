@@ -1,6 +1,5 @@
 package ru.otus.java.chat.server;
 
-import ru.otus.java.chat.server.utils.userRoles;
 
 public interface AuthenticatedProvider {
     void initialize();
@@ -8,5 +7,5 @@ public interface AuthenticatedProvider {
                          String password);
     boolean registration(ClientHandler clientHandler, String login,
                          String password, String userName);
-    userRoles getUserRole(String userName);
+    boolean isAdmin(String userName);
 }
