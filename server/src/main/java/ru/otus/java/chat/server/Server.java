@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -13,15 +14,20 @@ public class Server {
     private List<ClientHandler> clientHandlerList;
     @Getter
     private AuthenticatedProvider authenticatedProvider;
+    @Getter
+    private List<User> usersList;
+    @Getter
+    private UserServiceJDBC userServiceJDBC;
 
-    public Server(int port) {
+    public Server(int port) throws SQLException {
         this.port = port;
         clientHandlerList = new CopyOnWriteArrayList<>();
+        userServiceJDBC = new UserServiceJDBCImpl();
+        usersList = userServiceJDBC.getAll();
         authenticatedProvider = new InMemoryAuthenticatedProvider(this);
     }
 
     public void start() {
-
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Сервер запущен на порту: " + port);
             authenticatedProvider.initialize();
